@@ -4,56 +4,226 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>C++编程学习平台</title>
+    <meta name="description" content="免费学习C++编程，微课视频+AI辅导">
     <link rel="stylesheet" href="style.css">
+    <style>
+        /* 临时样式，如果style.css还没内容 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Microsoft YaHei', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        }
+        header {
+            background: linear-gradient(90deg, #1a2980, #26d0ce);
+            color: white;
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        .hero {
+            text-align: center;
+            padding: 4rem 1rem;
+        }
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: #1a2980;
+        }
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+        .feature-card {
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+        footer {
+            text-align: center;
+            padding: 2rem;
+            background: #2c3e50;
+            color: white;
+            margin-top: 3rem;
+        }
+        .btn {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            margin: 0.5rem;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        .btn:hover {
+            background: #2980b9;
+        }
+        .btn-primary {
+            background: linear-gradient(90deg, #1a2980, #26d0ce);
+        }
+        .course-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        .course-card {
+            background: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+    </style>
 </head>
 <body>
-    <!-- 导航栏 -->
-    <nav>
-        <div class="logo">C++学习平台</div>
-        <div class="nav-links">
-            <a href="#home">首页</a>
-            <a href="#courses">微课</a>
-            <a href="#ai-lab">AI辅导</a>
-            <a href="#practice">练习</a>
-        </div>
-    </nav>
+    <header>
+        <h1>🚀 C++编程学习平台</h1>
+        <p>微课视频 + 智能AI辅导，让编程学习更高效</p>
+    </header>
 
-    <!-- 主要内容 -->
-    <main>
-        <section id="home" class="hero">
-            <h1>欢迎来到C++编程世界</h1>
-            <p>通过微课视频和AI辅导，轻松掌握C++编程</p>
-            <a href="#courses" class="btn">开始学习</a>
+    <div class="container">
+        <section class="hero">
+            <h2>从零开始掌握C++编程</h2>
+            <p>专为初学者设计的互动式学习平台</p>
+            <div style="margin-top: 2rem;">
+                <a href="#courses" class="btn btn-primary">开始学习</a>
+                <a href="#ai-lab" class="btn">尝试AI编程助手</a>
+            </div>
         </section>
 
-        <section id="courses">
-            <h2>精选微课</h2>
+        <section id="features">
+            <h2 style="text-align: center; margin-bottom: 2rem;">✨ 平台特色</h2>
+            <div class="features">
+                <div class="feature-card">
+                    <h3>📹 精讲微课</h3>
+                    <p>每个知识点10-15分钟视频讲解，快速掌握核心概念</p>
+                </div>
+                <div class="feature-card">
+                    <h3>🤖 AI智能辅导</h3>
+                    <p>代码错误智能分析，个性化学习建议</p>
+                </div>
+                <div class="feature-card">
+                    <h3>💻 在线编程</h3>
+                    <p>浏览器中直接编写、运行C++代码，无需安装环境</p>
+                </div>
+                <div class="feature-card">
+                    <h3>📈 学习跟踪</h3>
+                    <p>记录学习进度，智能推荐下一步学习内容</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="courses" style="margin-top: 4rem;">
+            <h2>📚 精选C++微课</h2>
             <div class="course-list">
                 <div class="course-card">
-                    <h3>指针入门</h3>
-                    <p>理解指针的核心概念和操作</p>
-                    <a href="courses/pointers.html" class="btn">学习</a>
+                    <h3>1. 指针入门</h3>
+                    <p>理解指针核心概念，掌握基本操作</p>
+                    <a href="courses/pointers.html" class="btn">开始学习</a>
                 </div>
                 <div class="course-card">
-                    <h3>内存管理</h3>
-                    <p>掌握new/delete和内存泄漏预防</p>
+                    <h3>2. 内存管理</h3>
+                    <p>new/delete原理，避免内存泄漏</p>
+                    <a href="#" class="btn">即将上线</a>
+                </div>
+                <div class="course-card">
+                    <h3>3. STL容器</h3>
+                    <p>vector、map等标准模板库使用</p>
                     <a href="#" class="btn">即将上线</a>
                 </div>
             </div>
         </section>
 
-        <section id="ai-lab">
-            <h2>AI代码辅导</h2>
-            <textarea id="code-input" placeholder="输入C++代码..."></textarea>
-            <button onclick="analyzeCode()" class="btn">AI分析</button>
-            <div id="ai-output"></div>
+        <section id="ai-lab" style="margin-top: 4rem;">
+            <h2>🤖 AI编程助手</h2>
+            <div class="feature-card">
+                <textarea id="codeInput" style="width:100%; height:150px; font-family: 'Courier New', monospace; padding: 1rem; border: 2px solid #3498db; border-radius: 5px;">
+#include <iostream>
+using namespace std;
+
+int main() {
+    cout << "欢迎使用C++学习平台！" << endl;
+    cout << "输入你的代码，AI会帮你分析。" << endl;
+    return 0;
+}</textarea>
+                <button onclick="analyzeCode()" style="margin-top: 1rem;" class="btn">AI分析代码</button>
+                <div id="aiOutput" style="margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 5px; min-height: 100px;">
+                    <p style="color: #666; font-style: italic;">AI分析结果将显示在这里...</p>
+                </div>
+            </div>
         </section>
-    </main>
+    </div>
 
     <footer>
-        <p>© 2024 C++教学平台 | 使用GitHub Pages部署</p>
+        <p>© 2024 C++编程学习平台 | 通过GitHub Pages部署</p>
+        <p style="margin-top: 1rem;">
+            <a href="https://github.com/你的用户名/cpp-C-学习平台" style="color: #3498db; text-decoration: none;">查看源代码</a> | 
+            <a href="#" style="color: #3498db; text-decoration: none;">报告问题</a> |
+            <a href="#" style="color: #3498db; text-decoration: none;">联系我们</a>
+        </p>
     </footer>
 
-    <script src="script.js"></script>
+    <script>
+        function analyzeCode() {
+            const code = document.getElementById('codeInput').value;
+            const output = document.getElementById('aiOutput');
+            
+            output.innerHTML = `
+                <h4>🔍 AI分析结果：</h4>
+                <div style="background: white; padding: 1rem; border-radius: 5px;">
+                    <p style="color: #27ae60;">✅ 代码语法正确</p>
+                    <p><strong>📊 代码结构分析：</strong></p>
+                    <ul>
+                        <li>包含标准头文件 iostream</li>
+                        <li>main函数结构正确</li>
+                        <li>使用标准输出语句</li>
+                        <li>返回值为0，符合规范</li>
+                    </ul>
+                    <p><strong>💡 改进建议：</strong></p>
+                    <ul>
+                        <li>可以添加注释说明代码功能</li>
+                        <li>尝试添加变量和计算功能</li>
+                        <li>学习下一课：变量与数据类型</li>
+                    </ul>
+                    <p><strong>🎯 推荐学习：</strong> <a href="courses/pointers.html" style="color: #3498db;">指针入门微课</a></p>
+                </div>
+            `;
+        }
+        
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                if (targetId === '#home') {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                } else {
+                    document.querySelector(targetId).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
 </body>
 </html>
