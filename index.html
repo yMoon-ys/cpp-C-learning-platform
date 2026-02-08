@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>C++编程学习平台</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav>
+        <div class="logo">C++学习平台</div>
+        <div class="nav-links">
+            <a href="#home">首页</a>
+            <a href="#courses">微课</a>
+            <a href="#ai-lab">AI辅导</a>
+            <a href="#practice">练习</a>
+        </div>
+    </nav>
+
+    <!-- 主要内容 -->
+    <main>
+        <section id="home" class="hero">
+            <h1>欢迎来到C++编程世界</h1>
+            <p>通过微课视频和AI辅导，轻松掌握C++编程</p>
+            <a href="#courses" class="btn">开始学习</a>
+        </section>
+
+        <section id="courses">
+            <h2>精选微课</h2>
+            <div class="course-list">
+                <div class="course-card">
+                    <h3>指针入门</h3>
+                    <p>理解指针的核心概念和操作</p>
+                    <a href="courses/pointers.html" class="btn">学习</a>
+                </div>
+                <div class="course-card">
+                    <h3>内存管理</h3>
+                    <p>掌握new/delete和内存泄漏预防</p>
+                    <a href="#" class="btn">即将上线</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="ai-lab">
+            <h2>AI代码辅导</h2>
+            <textarea id="code-input" placeholder="输入C++代码..."></textarea>
+            <button onclick="analyzeCode()" class="btn">AI分析</button>
+            <div id="ai-output"></div>
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2024 C++教学平台 | 使用GitHub Pages部署</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
