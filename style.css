@@ -112,3 +112,13 @@ body {
     border: none;
     cursor: pointer;
 }
+/* 添加到 style.css 末尾，用于点击交互的视觉反馈 */
+.course-card.completed {
+    border-left: 5px solid #27ae60; /* 左侧绿色边框作为完成标记 */
+    background-color: #f8fff9; /* 浅绿色背景 */
+}
+.todo-list li {
+    cursor: pointer;
+    padding: 5px 0;
+    transition: all 0.3s ease;
+}
