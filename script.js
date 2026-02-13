@@ -1,52 +1,133 @@
-/**
- * C++学习平台 - 交互脚本
- * 功能：待办事项、进度更新、AI代码分析模拟
- */
+// ===== 登录处理 =====
+function handleLogin(event) {
+    event.preventDefault();
+    const username = document.getElementById('username').value;
+    const password = document.getElementById('password').value;
+    
+    // 简单模拟登录验证
+    if (username && password) {
+        // 保存登录状态
+        localStorage.setItem('isLoggedIn', 'true');
+        localStorage.setItem('username', username);
+        // 跳转到仪表盘
+        window.location.href = 'dashboard.html';
+    } else {
+        alert('请输入用户名和密码');
+    }
+    return false;
+}
 
-// 页面加载完成后执行
+// ===== 页面加载完成后执行 =====
 document.addEventListener('DOMContentLoaded', function() {
     
-    // 1. 初始化待办事项功能
+    // 1. 检查登录状态（dashboard页需要登录）
+    if (window.location.pathname.includes('dashboard.html')) {
+        const isLoggedIn = localStorage.getItem('isLoggedIn');
+        if (!isLoggedIn) {
+            window.location.href = 'index.html';
+            return;
+        }
+        
+        // 显示用户名
+        const username = localStorage.getItem('username') || '张三';
+        document.querySelectorAll('.welcome-text h1, .user-name').forEach(el => {
+            if (el) {
+                if (el.classList.contains('user-name')) {
+                    el.textContent = username;
+                } else {
+                    el.textContent = `下午好，${username}`;
+                }
+            }
+        });
+        
+        // 模拟连续学习天数
+        const daysCount = document.querySelector('.days-count');
+        if (daysCount) {
+            const days = Math.floor(Math.random() * 30) + 5; // 5-35天随机
+            daysCount.innerHTML = `${days}<span>天</span>`;
+        }
+    }
+
+    // 2. 导航栏交互（6个模块切换）
+    initNavigation();
+    
+    // 3. 待办事项交互
     initTodoList();
     
-    // 2. 初始化课程卡片交互
+    // 4. 课程卡片交互
     initCourseCards();
-    
-    // 3. 初始化其他动态效果
-    initDynamicEffects();
-    
-    console.log('C++学习平台交互已加载！');
 });
 
-/**
- * 待办事项列表功能
- */
+// ===== 导航切换功能（核心）=====
+function initNavigation() {
+    const navItems = document.querySelectorAll('.nav-item');
+    const contentArea = document.getElementById('contentArea');
+    
+    navItems.forEach(item => {
+        item.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            // 移除所有active状态
+            navItems.forEach(nav => nav.classList.remove('active'));
+            // 添加当前active
+            this.classList.add('active');
+            
+            // 获取要跳转的页面
+            const page = this.dataset.page;
+            
+            // 实际项目中：跳转到不同html页面
+            // 这里模拟6个模块的切换效果
+            if (page === 'dashboard') {
+                // 已经是仪表盘，不跳转
+                return;
+            } else {
+                // 跳转到对应页面（实际项目需要创建这些html文件）
+                window.location.href = `${page}.html`;
+            }
+            
+            // 如果你想要单页切换效果（不跳转），使用下面的代码：
+            /*
+            if (page === 'courses') {
+                contentArea.innerHTML = '<div class="content-module"><h2>📚 课程中心</h2><p>课程列表加载中...</p></div>';
+            } else if (page === 'practice') {
+                contentArea.innerHTML = '<div class="content-module"><h2>✏️ 在线练习</h2><p>选择题、填空题、编程题...</p></div>';
+            } else if (page === 'sandbox') {
+                contentArea.innerHTML = '<div class="content-module"><h2>🛠️ 自由调试</h2><p>C++代码在线运行环境</p><textarea style="width:100%;height:200px;margin-top:20px;padding:15px;font-family:monospace;">#include <iostream>\nusing namespace std;\n\nint main() {\n    cout << "Hello, C++!" << endl;\n    return 0;\n}</textarea><button style="margin-top:20px;padding:10px 20px;background:#4a1e6b;color:white;border:none;border-radius:6px;">运行代码</button></div>';
+            } else if (page === 'ai') {
+                contentArea.innerHTML = '<div class="content-module"><h2>🤖 AI编程助手</h2><p>智能代码分析、错误诊断、学习建议</p><div style="margin-top:20px;padding:30px;background:#f5f5f5;border-radius:12px;text-align:center;">AI助手功能开发中...</div></div>';
+            } else if (page === 'discussion') {
+                contentArea.innerHTML = '<div class="content-module"><h2>💬 讨论区</h2><p>与同学一起交流C++学习问题</p><div style="margin-top:20px;padding:30px;background:#f5f5f5;border-radius:12px;text-align:center;">讨论区即将开放</div></div>';
+            } else if (page === 'settings') {
+                contentArea.innerHTML = '<div class="content-module"><h2>⚙️ 设置</h2><p>账号设置、学习偏好、通知设置</p><div style="margin-top:20px;padding:30px;background:#f5f5f5;border-radius:12px;">个人设置页面</div></div>';
+            }
+            */
+        });
+    });
+}
+
+// ===== 待办事项功能 =====
 function initTodoList() {
     const checkboxes = document.querySelectorAll('.todo-item input[type="checkbox"]');
     
     checkboxes.forEach(checkbox => {
-        // 从本地存储恢复状态
+        // 恢复已保存的状态
         const savedState = localStorage.getItem(`todo_${checkbox.id}`);
         if (savedState === 'checked') {
             checkbox.checked = true;
-            // 为已完成的项添加视觉样式
             const label = checkbox.nextElementSibling;
-            label.style.textDecoration = 'line-through';
-            label.style.color = 'var(--color-text-secondary)';
+            if (label) {
+                label.style.textDecoration = 'line-through';
+                label.style.color = '#999';
+            }
         }
         
-        // 添加点击事件
         checkbox.addEventListener('change', function() {
             const label = this.nextElementSibling;
-            
             if (this.checked) {
                 label.style.textDecoration = 'line-through';
-                label.style.color = 'var(--color-text-secondary)';
-                // 保存状态到本地存储
+                label.style.color = '#999';
                 localStorage.setItem(`todo_${this.id}`, 'checked');
-                
-                // 显示一个简单的完成动画
-                showCompletionToast('✅ 任务完成！');
+                showToast('✅ 任务完成，继续加油！');
             } else {
                 label.style.textDecoration = 'none';
                 label.style.color = '';
@@ -56,195 +137,42 @@ function initTodoList() {
     });
 }
 
-/**
- * 课程卡片交互功能
- */
+// ===== 课程卡片交互 =====
 function initCourseCards() {
-    const courseCards = document.querySelectorAll('.course-card:not(.card-upcoming)');
-    
-    courseCards.forEach(card => {
-        // 点击卡片任意位置（除了按钮）可以查看详情
-        card.addEventListener('click', function(event) {
-            // 如果点击的是按钮，不触发卡片详情查看
-            if (event.target.tagName === 'BUTTON' || 
-                event.target.tagName === 'A' || 
-                event.target.closest('.card-actions')) {
-                return;
-            }
-            
-            // 这里可以添加查看课程详情的逻辑
-            const courseTitle = this.querySelector('.card-title').textContent;
-            console.log(`查看课程详情: ${courseTitle}`);
-            // 在实际项目中，这里可以跳转到课程详情页或打开模态框
-        });
-        
-        // 悬停效果增强（已通过CSS实现，这里可以添加额外逻辑）
-    });
-}
-
-/**
- * 初始化动态效果
- */
-function initDynamicEffects() {
-    // 模拟进度条加载动画
-    const progressBars = document.querySelectorAll('.progress-fill');
-    progressBars.forEach(bar => {
-        const currentWidth = bar.style.width;
-        bar.style.width = '0%';
-        
-        // 使用setTimeout模拟进度加载动画
-        setTimeout(() => {
-            bar.style.width = currentWidth;
-        }, 300);
-    });
-    
-    // 为“继续学习”按钮添加点击效果
-    const continueButtons = document.querySelectorAll('.btn-small, .btn-primary');
-    continueButtons.forEach(btn => {
+    const courseBtns = document.querySelectorAll('.course-card .btn-small');
+    courseBtns.forEach(btn => {
         btn.addEventListener('click', function(e) {
-            // 添加点击反馈
-            this.style.transform = 'scale(0.98)';
-            setTimeout(() => {
-                this.style.transform = '';
-            }, 150);
+            e.stopPropagation();
+            const courseName = this.closest('.course-card').querySelector('h3').textContent;
+            showToast(`📚 进入课程：${courseName}`);
+            // 实际项目中跳转到课程详情页
+            // window.location.href = `courses/${courseName}.html`;
         });
     });
 }
 
-/**
- * AI代码分析功能
- */
-function analyzeCode() {
-    const codeInput = document.querySelector('.code-input');
-    const aiOutput = document.getElementById('aiOutput');
-    
-    if (!codeInput || !aiOutput) return;
-    
-    const code = codeInput.value.trim();
-    
-    if (!code) {
-        showAIOutput(aiOutput, '❌ 请输入一些C++代码进行分析。', 'error');
-        return;
+// ===== 提示消息 =====
+function showToast(message) {
+    // 移除已存在的toast
+    const existingToast = document.querySelector('.custom-toast');
+    if (existingToast) {
+        existingToast.remove();
     }
     
-    // 显示加载状态
-    showAIOutput(aiOutput, '🔄 AI正在分析你的代码，请稍候...', 'loading');
-    
-    // 模拟网络请求延迟
-    setTimeout(() => {
-        // 这里是模拟的AI分析逻辑
-        const analysisResult = simulateAIAnalysis(code);
-        showAIOutput(aiOutput, analysisResult, 'success');
-        
-        // 添加到分析历史（模拟）
-        addToAnalysisHistory(code, analysisResult);
-    }, 1500);
-}
-
-/**
- * 模拟AI分析函数
- */
-function simulateAIAnalysis(code) {
-    let result = '## ✅ 代码分析完成\n\n';
-    
-    // 简单的代码检查逻辑（模拟）
-    if (code.includes('include')) {
-        result += '**✅ 头文件包含：** 检测到标准头文件包含。\n\n';
-    }
-    
-    if (code.includes('main()')) {
-        result += '**✅ 主函数：** main函数结构正确。\n\n';
-    } else {
-        result += '**⚠️ 注意：** 未检测到main函数，程序可能无法直接运行。\n\n';
-    }
-    
-    if (code.includes('cout') || code.includes('printf')) {
-        result += '**✅ 输出语句：** 包含输出语句，便于调试。\n\n';
-    }
-    
-    // 检查常见问题
-    if (code.includes('using namespace std;')) {
-        result += '**💡 建议：** 对于小型项目可以使用`using namespace std;`，但在大型项目中建议显式使用`std::`前缀。\n\n';
-    }
-    
-    if (code.includes('endl') && code.includes('\\n')) {
-        result += '**💡 性能提示：** 在需要频繁输出的场景中，使用`"\\n"`比`endl`性能更好，因为`endl`会立即刷新输出缓冲区。\n\n';
-    }
-    
-    // 检查内存管理
-    if (code.includes('new ') && !code.includes('delete ')) {
-        result += '**⚠️ 内存警告：** 检测到`new`操作符，但未找到对应的`delete`，可能存在内存泄漏风险。\n\n';
-    }
-    
-    result += '**🎯 下一步学习建议：**\n';
-    result += '1. 尝试为你的程序添加函数\n';
-    result += '2. 学习使用数组或向量存储数据\n';
-    result += '3. 了解指针的基本概念和应用\n';
-    
-    return result;
-}
-
-/**
- * 显示AI分析结果
- */
-function showAIOutput(outputElement, content, type) {
-    // 根据类型设置不同的样式
-    let className = 'ai-output-message';
-    if (type === 'loading') className += ' output-loading';
-    if (type === 'error') className += ' output-error';
-    if (type === 'success') className += ' output-success';
-    
-    outputElement.innerHTML = `<div class="${className}">${content.replace(/\n/g, '<br>')}</div>`;
-    
-    // 添加结果区域的样式
-    const style = document.createElement('style');
-    style.textContent = `
-        .ai-output-message { padding: 12px; border-radius: 8px; }
-        .output-loading { background-color: #e6f7ff; border-left: 4px solid #1890ff; }
-        .output-error { background-color: #fff2f0; border-left: 4px solid #ff4d4f; }
-        .output-success { background-color: #f6ffed; border-left: 4px solid #52c41a; }
-    `;
-    document.head.appendChild(style);
-}
-
-/**
- * 模拟添加到分析历史
- */
-function addToAnalysisHistory(code, result) {
-    // 这里可以实际实现历史记录功能
-    console.log('分析记录已保存（模拟）');
-    
-    // 在实际项目中，可以将记录保存到localStorage或发送到服务器
-    const history = JSON.parse(localStorage.getItem('codeAnalysisHistory') || '[]');
-    history.unshift({
-        code: code.substring(0, 100) + (code.length > 100 ? '...' : ''),
-        result: result.substring(0, 200) + (result.length > 200 ? '...' : ''),
-        timestamp: new Date().toISOString()
-    });
-    
-    // 只保留最近的10条记录
-    if (history.length > 10) history.length = 10;
-    
-    localStorage.setItem('codeAnalysisHistory', JSON.stringify(history));
-}
-
-/**
- * 显示完成提示
- */
-function showCompletionToast(message) {
-    // 创建一个简单的提示元素
+    // 创建新toast
     const toast = document.createElement('div');
+    toast.className = 'custom-toast';
     toast.textContent = message;
     toast.style.cssText = `
         position: fixed;
-        top: 80px;
-        right: 20px;
-        background: #52c41a;
+        top: 100px;
+        right: 30px;
+        background: #4a1e6b;
         color: white;
-        padding: 12px 20px;
-        border-radius: 6px;
+        padding: 12px 24px;
+        border-radius: 8px;
         box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-        z-index: 1000;
+        z-index: 9999;
         animation: slideIn 0.3s, fadeOut 0.3s 2.7s;
     `;
     
@@ -264,7 +192,7 @@ function showCompletionToast(message) {
     
     document.body.appendChild(toast);
     
-    // 3秒后自动移除
+    // 3秒后移除
     setTimeout(() => {
         if (toast.parentNode) {
             toast.parentNode.removeChild(toast);
@@ -272,20 +200,12 @@ function showCompletionToast(message) {
     }, 3000);
 }
 
-/**
- * 工具函数：防抖
- */
-function debounce(func, wait) {
-    let timeout;
-    return function executedFunction(...args) {
-        const later = () => {
-            clearTimeout(timeout);
-            func(...args);
-        };
-        clearTimeout(timeout);
-        timeout = setTimeout(later, wait);
-    };
+// ===== 退出登录 =====
+function logout() {
+    localStorage.removeItem('isLoggedIn');
+    window.location.href = 'index.html';
 }
 
-// 将analyzeCode函数暴露给全局，以便HTML中的onclick属性调用
-window.analyzeCode = analyzeCode;
+// 全局函数
+window.handleLogin = handleLogin;
+window.logout = logout;
