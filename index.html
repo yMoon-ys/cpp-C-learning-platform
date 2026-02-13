@@ -3,230 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>C++学习平台</title>
-    <!-- 核心：引入样式文件 -->
+    <title>登录 · C++学习平台</title>
     <link rel="stylesheet" href="style.css">
 </head>
-<body>
-    <!-- 【顶部导航栏】 -->
-    <header class="site-header">
-        <div class="header-container">
-            <!-- 左侧Logo和平台名 -->
-            <a href="index.html" class="brand">
-                <span class="brand-logo">C++</span>
-                <span class="brand-name">学习平台</span>
-            </a>
-
-            <!-- 中部主导航 -->
-            <nav class="main-nav">
-                <a href="index.html" class="nav-link active">
-                    <span class="nav-icon">🏠</span>
-                    <span class="nav-text">首页</span>
-                </a>
-                <a href="#course" class="nav-link">
-                    <span class="nav-icon">📚</span>
-                    <span class="nav-text">课程</span>
-                </a>
-                <a href="#task" class="nav-link">
-                    <span class="nav-icon">📋</span>
-                    <span class="nav-text">任务</span>
-                </a>
-                <a href="#ai" class="nav-link">
-                    <span class="nav-icon">🤖</span>
-                    <span class="nav-text">AI助手</span>
-                </a>
-            </nav>
-
-            <!-- 右侧用户功能区 -->
-            <div class="user-zone">
-                <button class="btn-icon" title="消息">
-                    <span class="icon">💬</span>
-                </button>
-                <button class="btn-icon" title="通知">
-                    <span class="icon">🔔</span>
-                </button>
-                <div class="user-avatar">
-                    <span class="avatar-text">我</span>
+<body class="login-body">
+    <div class="login-container">
+        <div class="login-left">
+            <div class="login-logo">C++</div>
+            <h1>C++学习平台</h1>
+            <p>微课 · AI辅导 · 在线编程</p>
+        </div>
+        <div class="login-right">
+            <div class="login-box">
+                <h2>欢迎回来</h2>
+                <p class="login-sub">请登录你的账号</p>
+                <form id="loginForm" onsubmit="return handleLogin(event)">
+                    <div class="form-group">
+                        <label>学号 / 邮箱</label>
+                        <input type="text" id="username" placeholder="请输入学号或邮箱" value="2024001">
+                    </div>
+                    <div class="form-group">
+                        <label>密码</label>
+                        <input type="password" id="password" placeholder="请输入密码" value="123456">
+                    </div>
+                    <div class="form-options">
+                        <label>
+                            <input type="checkbox" checked> 记住我
+                        </label>
+                        <a href="#">忘记密码？</a>
+                    </div>
+                    <button type="submit" class="login-btn">登录</button>
+                </form>
+                <div class="login-footer">
+                    还没有账号？ <a href="#">立即注册</a>
                 </div>
             </div>
         </div>
-    </header>
-
-    <!-- 【主内容区】采用经典“侧边栏+主面板”布局 -->
-    <div class="main-layout">
-        <!-- 左侧边栏：个人学习状态 -->
-        <aside class="sidebar">
-            <section class="sidebar-section user-info-card">
-                <div class="user-avatar-large">
-                    <span class="avatar-text-large">学</span>
-                </div>
-                <h3 class="user-name">学习者</h3>
-                <p class="user-stats">连续学习 <strong>5</strong> 天</p>
-            </section>
-
-            <section class="sidebar-section">
-                <h4 class="sidebar-title">📅 今日待办</h4>
-                <ul class="todo-list">
-                    <li class="todo-item">
-                        <input type="checkbox" id="todo1">
-                        <label for="todo1">完成指针练习 (15:00前)</label>
-                    </li>
-                    <li class="todo-item">
-                        <input type="checkbox" id="todo2">
-                        <label for="todo2">观看内存管理视频</label>
-                    </li>
-                    <li class="todo-item">
-                        <input type="checkbox" id="todo3">
-                        <label for="todo3">参与函数章节讨论</label>
-                    </li>
-                </ul>
-            </section>
-
-            <section class="sidebar-section">
-                <h4 class="sidebar-title">🚀 最近学习</h4>
-                <div class="recent-course">
-                    <div class="course-progress-info">
-                        <h5>指针入门</h5>
-                        <div class="progress-bar">
-                            <div class="progress-fill" style="width: 65%"></div>
-                        </div>
-                        <span class="progress-text">65% 完成</span>
-                    </div>
-                    <a href="courses/pointers.html" class="btn-small">继续</a>
-                </div>
-            </section>
-        </aside>
-
-        <!-- 右侧主面板：核心内容 -->
-        <main class="main-content">
-            <!-- 欢迎横幅 -->
-            <section class="welcome-banner">
-                <h1>下午好，准备好今天的C++学习了吗？</h1>
-                <p>你已掌握 <strong>3</strong> 个核心概念，继续加油！</p>
-            </section>
-
-            <!-- 课程模块 -->
-            <section id="course" class="module">
-                <div class="module-header">
-                    <h2 class="module-title">📚 我的课程</h2>
-                    <a href="#" class="module-action">查看全部 →</a>
-                </div>
-
-                <div class="course-card-container">
-                    <!-- 课程卡片 1 -->
-                    <article class="course-card">
-                        <div class="card-badge">进行中</div>
-                        <div class="card-content">
-                            <h3 class="card-title">指针入门</h3>
-                            <p class="card-description">
-                                理解指针核心概念，掌握地址操作与动态内存。
-                            </p>
-                            <div class="card-meta">
-                                <span class="meta-item">⏱️ 15分钟</span>
-                                <span class="meta-item">📊 初级</span>
-                                <span class="meta-item">张老师</span>
-                            </div>
-                            <div class="card-progress">
-                                <div class="progress-bar">
-                                    <div class="progress-fill" style="width: 65%"></div>
-                                </div>
-                                <span>已学 65%</span>
-                            </div>
-                        </div>
-                        <div class="card-actions">
-                            <a href="courses/pointers.html" class="btn-primary">进入学习</a>
-                        </div>
-                    </article>
-
-                    <!-- 课程卡片 2 -->
-                    <article class="course-card">
-                        <div class="card-badge">进行中</div>
-                        <div class="card-content">
-                            <h3 class="card-title">变量与数据类型</h3>
-                            <p class="card-description">
-                                学习变量声明、作用域与C++基础数据类型。
-                            </p>
-                            <div class="card-meta">
-                                <span class="meta-item">⏱️ 12分钟</span>
-                                <span class="meta-item">📊 初级</span>
-                                <span class="meta-item">李老师</span>
-                            </div>
-                            <div class="card-progress">
-                                <div class="progress-bar">
-                                    <div class="progress-fill" style="width: 30%"></div>
-                                </div>
-                                <span>已学 30%</span>
-                            </div>
-                        </div>
-                        <div class="card-actions">
-                            <a href="courses/variables.html" class="btn-primary">进入学习</a>
-                        </div>
-                    </article>
-
-                    <!-- 课程卡片 3 (即将上线) -->
-                    <article class="course-card card-upcoming">
-                        <div class="card-badge">即将上线</div>
-                        <div class="card-content">
-                            <h3 class="card-title">内存管理</h3>
-                            <p class="card-description">
-                                掌握new/delete，理解并避免内存泄漏。
-                            </p>
-                            <div class="card-meta">
-                                <span class="meta-item">⏱️ 18分钟</span>
-                                <span class="meta-item">📊 中级</span>
-                                <span class="meta-item">王老师</span>
-                            </div>
-                        </div>
-                        <div class="card-actions">
-                            <button class="btn-secondary" disabled>敬请期待</button>
-                        </div>
-                    </article>
-                </div>
-            </section>
-
-            <!-- AI助手模块 -->
-            <section id="ai" class="module">
-                <div class="module-header">
-                    <h2 class="module-title">🤖 AI编程助手</h2>
-                    <p class="module-subtitle">遇到问题？粘贴代码获取即时分析</p>
-                </div>
-                <div class="ai-helper">
-                    <div class="code-editor-area">
-                        <h4>输入C++代码</h4>
-                        <textarea class="code-input" placeholder="#include <iostream>
-using namespace std;
-
-int main() {
-    // 在这里输入你的代码...
-    cout << \"Hello, C++ Learner!\" << endl;
-    return 0;
-}"></textarea>
-                        <button class="btn-primary" onclick="analyzeCode()">分析代码</button>
-                    </div>
-                    <div class="ai-output-area">
-                        <h4>AI分析结果</h4>
-                        <div class="ai-output" id="aiOutput">
-                            <p class="output-placeholder">
-                                点击“分析代码”按钮，AI将为你检查语法、提供优化建议。
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </section>
-        </main>
     </div>
-
-    <!-- 【页脚】 -->
-    <footer class="site-footer">
-        <div class="footer-container">
-            <p class="footer-copyright">
-                © 2024 C++学习平台 · 基于 GitHub Pages 构建
-                <a href="https://github.com/yMoon-ys/cpp-C-learning-platform" class="footer-link">查看源码</a>
-            </p>
-        </div>
-    </footer>
-
-    <!-- 核心：引入交互脚本 -->
     <script src="script.js"></script>
 </body>
 </html>
