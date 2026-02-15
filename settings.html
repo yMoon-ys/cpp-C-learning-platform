@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>设置 · C++学习平台</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* 设置页面专用样式 */
+        .settings-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .settings-section {
+            background: white;
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            border: 1px solid #f0f0f0;
+        }
+        
+        .section-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #000;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .section-title i {
+            font-size: 20px;
+            color: #4a1e6b;
+        }
+        
+        .settings-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 0;
+            border-bottom: 1px solid #f5f5f5;
+        }
+        
+        .settings-item:last-child {
+            border-bottom: none;
+        }
+        
+        .item-label {
+            font-size: 15px;
+            color: #333;
+        }
+        
+        .item-value {
+            color: #666;
+            font-size: 14px;
+            margin-right: 16px;
+        }
+        
+        .item-action {
+            color: #4a1e6b;
+            font-size: 14px;
+            text-decoration: none;
+            padding: 6px 12px;
+            border-radius: 6px;
+            background: #f5f0ff;
+            transition: all 0.2s;
+        }
+        
+        .item-action:hover {
+            background: #4a1e6b;
+            color: white;
+        }
+        
+        /* 头像上传区域 */
+        .avatar-upload {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            padding: 16px 0;
+        }
+        
+        .current-avatar {
+            width: 64px;
+            height: 64px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        
+        .avatar-actions {
+            display: flex;
+            gap: 12px;
+        }
+        
+        .avatar-btn {
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 14px;
+            cursor: pointer;
+            border: 1px solid #ddd;
+            background: white;
+            color: #333;
+            transition: all 0.2s;
+        }
+        
+        .avatar-btn:hover {
+            background: #f5f5f5;
+            border-color: #999;
+        }
+        
+        .avatar-btn.primary {
+            background: #4a1e6b;
+            color: white;
+            border: none;
+        }
+        
+        .avatar-btn.primary:hover {
+            background: #6b2c8f;
+        }
+        
+        /* 昵称编辑区域 */
+        .nickname-edit {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .nickname-input {
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 14px;
+            width: 200px;
+        }
+        
+        .nickname-input:focus {
+            outline: none;
+            border-color: #4a1e6b;
+        }
+        
+        .save-btn {
+            padding: 8px 16px;
+            background: #4a1e6b;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+        
+        .save-btn:hover {
+            background: #6b2c8f;
+        }
+        
+        .cancel-btn {
+            padding: 8px 16px;
+            background: #f5f5f5;
+            color: #666;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+        
+        /* 密码修改表单 */
+        .password-form {
+            padding: 16px 0;
+        }
+        
+        .password-field {
+            margin-bottom: 16px;
+        }
+        
+        .password-field label {
+            display: block;
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 6px;
+        }
+        
+        .password-field input {
+            width: 100%;
+            max-width: 300px;
+            padding: 10px 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+        
+        .password-field input:focus {
+            outline: none;
+            border-color: #4a1e6b;
+        }
+        
+        .password-actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 16px;
+        }
+        
+        /* 注销账户区域 */
+        .danger-zone {
+            background: #fff2f0;
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 8px;
+        }
+        
+        .danger-title {
+            color: #cf1322;
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        
+        .danger-desc {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+        
+        .delete-btn {
+            background: #ff4d4f;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        
+        .delete-btn:hover {
+            background: #ff7875;
+        }
+        
+        /* 模态框样式 */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal.active {
+            display: flex;
+        }
+        
+        .modal-content {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+        }
+        
+        .modal-icon {
+            font-size: 48px;
+            margin-bottom: 16px;
+        }
+        
+        .modal-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #000;
+            margin-bottom: 12px;
+        }
+        
+        .modal-text {
+            color: #666;
+            margin-bottom: 24px;
+            line-height: 1.6;
+        }
+        
+        .modal-actions {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+        }
+        
+        .modal-btn {
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 15px;
+            cursor: pointer;
+            border: none;
+            min-width: 120px;
+        }
+        
+        .modal-btn.confirm {
+            background: #ff4d4f;
+            color: white;
+        }
+        
+        .modal-btn.cancel {
+            background: #f5f5f5;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard">
+        <!-- 左侧导航栏（紫底） -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-logo">C++</div>
+                <h2>C++学习平台</h2>
+            </div>
+            
+            <!-- 学习天数卡片 -->
+            <div class="days-card">
+                <div class="days-number">已连续学习</div>
+                <div class="days-count" id="daysCount">17<span>天</span></div>
+                <div class="days-motto">继续加油</div>
+            </div>
+
+            <!-- 导航菜单 -->
+            <nav class="sidebar-nav">
+                <a href="dashboard.html" class="nav-item">
+                    <span class="nav-icon">📊</span>
+                    <span class="nav-text">仪表盘</span>
+                </a>
+                <a href="courses.html" class="nav-item">
+                    <span class="nav-icon">📚</span>
+                    <span class="nav-text">课程</span>
+                </a>
+                <a href="practice.html" class="nav-item">
+                    <span class="nav-icon">✏️</span>
+                    <span class="nav-text">练习</span>
+                </a>
+                <a href="sandbox.html" class="nav-item">
+                    <span class="nav-icon">🛠️</span>
+                    <span class="nav-text">自由调试</span>
+                </a>
+                <a href="ai-assistant.html" class="nav-item">
+                    <span class="nav-icon">🤖</span>
+                    <span class="nav-text">AI助手</span>
+                </a>
+                <a href="discussion.html" class="nav-item">
+                    <span class="nav-icon">💬</span>
+                    <span class="nav-text">讨论</span>
+                </a>
+                <a href="settings.html" class="nav-item active">
+                    <span class="nav-icon">⚙️</span>
+                    <span class="nav-text">设置</span>
+                </a>
+            </nav>
+
+            <!-- 底部用户信息 -->
+            <div class="sidebar-footer">
+                <div class="user-info">
+                    <div class="user-avatar" id="headerAvatar">👤</div>
+                    <div class="user-detail">
+                        <div class="user-name" id="headerNickname">0631250124</div>
+                        <div class="user-role">计算机科学与技术 · 大二</div>
+                    </div>
+                </div>
+                <a href="index.html" class="logout-btn">退出</a>
+            </div>
+        </aside>
+
+        <!-- 右侧主内容区 -->
+        <main class="main-content">
+            <!-- 顶部蓝色区域 -->
+            <div class="top-blue-banner">
+                <div class="welcome-text">
+                    <h1>⚙️ 设置中心</h1>
+                    <p>管理你的账号和个人资料</p>
+                </div>
+                <div class="top-actions">
+                    <div class="notification">🔔</div>
+                    <div class="avatar-large" id="pageAvatar">👤</div>
+                </div>
+            </div>
+
+            <!-- 设置内容区域（三个竖排模块） -->
+            <div style="padding: 30px 40px;">
+                <div class="settings-container">
+                    
+                    <!-- 模块1：账户安全 -->
+                    <div class="settings-section">
+                        <div class="section-title">
+                            <span>🔐</span> 账户安全
+                        </div>
+                        
+                        <!-- 账号修改 -->
+                        <div class="settings-item">
+                            <span class="item-label">登录账号</span>
+                            <div style="display: flex; align-items: center;">
+                                <span class="item-value" id="currentUsername">0631250124</span>
+                                <a href="#" class="item-action" onclick="showEditAccount()">修改账号</a>
+                            </div>
+                        </div>
+                        
+                        <!-- 密码修改 -->
+                        <div class="settings-item">
+                            <span class="item-label">登录密码</span>
+                            <div style="display: flex; align-items: center;">
+                                <span class="item-value">••••••••</span>
+                                <a href="#" class="item-action" onclick="showChangePassword()">修改密码</a>
+                            </div>
+                        </div>
+                        
+                        <!-- 密码修改表单（默认隐藏） -->
+                        <div id="passwordForm" style="display: none;" class="password-form">
+                            <div class="password-field">
+                                <label>当前密码</label>
+                                <input type="password" id="oldPassword" placeholder="输入当前密码">
+                            </div>
+                            <div class="password-field">
+                                <label>新密码</label>
+                                <input type="password" id="newPassword" placeholder="输入新密码">
+                            </div>
+                            <div class="password-field">
+                                <label>确认新密码</label>
+                                <input type="password" id="confirmPassword" placeholder="再次输入新密码">
+                            </div>
+                            <div class="password-actions">
+                                <button class="save-btn" onclick="savePassword()">保存修改</button>
+                                <button class="cancel-btn" onclick="hidePasswordForm()">取消</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 模块2：基本资料 -->
+                    <div class="settings-section">
+                        <div class="section-title">
+                            <span>👤</span> 基本资料
+                        </div>
+                        
+                        <!-- 头像修改 -->
+                        <div class="avatar-upload">
+                            <div class="current-avatar" id="avatarPreview">👤</div>
+                            <div class="avatar-actions">
+                                <button class="avatar-btn" onclick="triggerFileUpload()">上传新头像</button>
+                                <button class="avatar-btn primary" onclick="resetAvatar()">使用默认</button>
+                            </div>
+                            <input type="file" id="avatarUpload" accept="image/*" style="display: none;">
+                        </div>
+                        
+                        <!-- 昵称修改 -->
+                        <div class="settings-item">
+                            <span class="item-label">昵称</span>
+                            <div style="display: flex; align-items: center; gap: 12px;">
+                                <span class="item-value" id="nicknameDisplay">0631250124</span>
+                                <a href="#" class="item-action" onclick="showEditNickname()">修改昵称</a>
+                            </div>
+                        </div>
+                        
+                        <!-- 昵称编辑表单（默认隐藏） -->
+                        <div id="nicknameForm" style="display: none;" class="nickname-edit">
+                            <input type="text" class="nickname-input" id="nicknameInput" value="0631250124" placeholder="输入新昵称">
+                            <button class="save-btn" onclick="saveNickname()">保存</button>
+                            <button class="cancel-btn" onclick="hideNicknameForm()">取消</button>
+                        </div>
+                        
+                        <!-- 个人简介 -->
+                        <div class="settings-item">
+                            <span class="item-label">个人简介</span>
+                            <div style="display: flex; align-items: center;">
+                                <span class="item-value">计算机科学与技术专业大二学生</span>
+                                <a href="#" class="item-action">编辑</a>
+                            </div>
+                        </div>
+                        
+                        <!-- 邮箱 -->
+                        <div class="settings-item">
+                            <span class="item-label">电子邮箱</span>
+                            <div style="display: flex; align-items: center;">
+                                <span class="item-value">0631250124@stu.edu.cn</span>
+                                <a href="#" class="item-action">修改</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 模块3：注销账户（危险操作） -->
+                    <div class="settings-section">
+                        <div class="section-title">
+                            <span>⚠️</span> 注销账户
+                        </div>
+                        
+                        <div class="danger-zone">
+                            <div class="danger-title">删除账号后将永久丢失：</div>
+                            <div class="danger-desc">
+                                • 所有学习进度和课程记录<br>
+                                • 已完成的练习和测试成绩<br>
+                                • 个人资料和设置偏好<br>
+                                • 无法恢复任何数据
+                            </div>
+                            <button class="delete-btn" onclick="showDeleteModal()">注销当前账户</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- 删除确认模态框 -->
+    <div class="modal" id="deleteModal">
+        <div class="modal-content">
+            <div class="modal-icon">⚠️</div>
+            <div class="modal-title">确认注销账户？</div>
+            <div class="modal-text">
+                此操作不可逆，所有数据将被永久删除。<br>
+                请输入你的登录密码以确认：
+            </div>
+            <input type="password" placeholder="输入密码" style="width:100%; padding:12px; margin-bottom:20px; border:1px solid #ddd; border-radius:8px;">
+            <div class="modal-actions">
+                <button class="modal-btn confirm" onclick="deleteAccount()">确认注销</button>
+                <button class="modal-btn cancel" onclick="hideDeleteModal()">取消</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        // 页面加载时初始化用户数据
+        document.addEventListener('DOMContentLoaded', function() {
+            // 从localStorage加载用户数据
+            loadUserSettings();
+            
+            // 更新头像显示
+            updateAvatarDisplay();
+        });
+        
+        // 加载用户设置
+        function loadUserSettings() {
+            const savedNickname = localStorage.getItem('nickname') || '0631250124';
+            const savedAvatar = localStorage.getItem('avatar') || 'default';
+            
+            // 更新所有显示昵称的地方
+            document.querySelectorAll('#nicknameDisplay, #headerNickname, .welcome-text h1').forEach(el => {
+                if (el) {
+                    if (el.tagName === 'H1') {
+                        el.textContent = `下午好，${savedNickname}`;
+                    } else {
+                        el.textContent = savedNickname;
+                    }
+                }
+            });
+            
+            // 更新头像
+            if (savedAvatar !== 'default') {
+                const avatarElements = document.querySelectorAll('#headerAvatar, #pageAvatar, #avatarPreview');
+                avatarElements.forEach(el => {
+                    el.innerHTML = `<img src="${savedAvatar}" style="width:100%; height:100%; border-radius:50%; object-fit:cover;">`;
+                });
+            }
+        }
+        
+        // 显示编辑账号表单
+        function showEditAccount() {
+            const newAccount = prompt('请输入新的登录账号:', '0631250124');
+            if (newAccount && newAccount !== '0631250124') {
+                localStorage.setItem('username', newAccount);
+                document.getElementById('currentUsername').textContent = newAccount;
+                showToast('✅ 账号修改成功');
+            }
+        }
+        
+        // 显示修改密码表单
+        function showChangePassword() {
+            document.getElementById('passwordForm').style.display = 'block';
+        }
+        
+        // 隐藏密码表单
+        function hidePasswordForm() {
+            document.getElementById('passwordForm').style.display = 'none';
+            // 清空输入
+            document.getElementById('oldPassword').value = '';
+            document.getElementById('newPassword').value = '';
+            document.getElementById('confirmPassword').value = '';
+        }
+        
+        // 保存密码
+        function savePassword() {
+            const oldPwd = document.getElementById('oldPassword').value;
+            const newPwd = document.getElementById('newPassword').value;
+            const confirmPwd = document.getElementById('confirmPassword').value;
+            
+            if (!oldPwd || !newPwd || !confirmPwd) {
+                alert('请填写所有密码字段');
+                return;
+            }
+            
+            if (newPwd !== confirmPwd) {
+                alert('新密码与确认密码不一致');
+                return;
+            }
+            
+            if (newPwd.length < 6) {
+                alert('密码长度至少6位');
+                return;
+            }
+            
+            // 模拟保存成功
+            showToast('✅ 密码修改成功');
+            hidePasswordForm();
+        }
+        
+        // 显示编辑昵称表单
+        function showEditNickname() {
+            document.getElementById('nicknameForm').style.display = 'flex';
+            document.getElementById('nicknameInput').value = document.getElementById('nicknameDisplay').textContent;
+        }
+        
+        // 隐藏昵称表单
+        function hideNicknameForm() {
+            document.getElementById('nicknameForm').style.display = 'none';
+        }
+        
+        // 保存昵称
+        function saveNickname() {
+            const newNickname = document.getElementById('nicknameInput').value.trim();
+            
+            if (!newNickname) {
+                alert('昵称不能为空');
+                return;
+            }
+            
+            // 保存到localStorage
+            localStorage.setItem('nickname', newNickname);
+            
+            // 更新所有显示昵称的地方
+            document.querySelectorAll('#nicknameDisplay, #headerNickname, .welcome-text h1').forEach(el => {
+                if (el) {
+                    if (el.tagName === 'H1') {
+                        el.textContent = `下午好，${newNickname}`;
+                    } else {
+                        el.textContent = newNickname;
+                    }
+                }
+            });
+            
+            showToast('✅ 昵称修改成功');
+            hideNicknameForm();
+        }
+        
+        // 触发文件上传
+        function triggerFileUpload() {
+            document.getElementById('avatarUpload').click();
+        }
+        
+        // 处理头像上传
+        document.getElementById('avatarUpload')?.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    const avatarUrl = event.target.result;
+                    
+                    // 保存到localStorage
+                    localStorage.setItem('avatar', avatarUrl);
+                    
+                    // 更新所有头像显示
+                    document.querySelectorAll('#headerAvatar, #pageAvatar, #avatarPreview').forEach(el => {
+                        el.innerHTML = `<img src="${avatarUrl}" style="width:100%; height:100%; border-radius:50%; object-fit:cover;">`;
+                    });
+                    
+                    showToast('✅ 头像上传成功');
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+        
+        // 重置头像为默认
+        function resetAvatar() {
+            localStorage.removeItem('avatar');
+            
+            document.querySelectorAll('#headerAvatar, #pageAvatar, #avatarPreview').forEach(el => {
+                el.innerHTML = '👤';
+                el.style.background = '';
+            });
+            
+            showToast('✅ 已恢复默认头像');
+        }
+        
+        // 更新头像显示
+        function updateAvatarDisplay() {
+            const savedAvatar = localStorage.getItem('avatar');
+            if (savedAvatar && savedAvatar !== 'default') {
+                document.querySelectorAll('#headerAvatar, #pageAvatar, #avatarPreview').forEach(el => {
+                    el.innerHTML = `<img src="${savedAvatar}" style="width:100%; height:100%; border-radius:50%; object-fit:cover;">`;
+                });
+            }
+        }
+        
+        // 显示删除确认模态框
+        function showDeleteModal() {
+            document.getElementById('deleteModal').classList.add('active');
+        }
+        
+        // 隐藏删除模态框
+        function hideDeleteModal() {
+            document.getElementById('deleteModal').classList.remove('active');
+        }
+        
+        // 删除账户
+        function deleteAccount() {
+            // 这里可以添加真实的删除逻辑
+            showToast('⚠️ 账户已注销，即将返回登录页');
+            
+            setTimeout(() => {
+                // 清除所有用户数据
+                localStorage.clear();
+                // 跳转到登录页
+                window.location.href = 'index.html';
+            }, 2000);
+        }
+        
+        // 显示提示消息
+        function showToast(message) {
+            const toast = document.createElement('div');
+            toast.textContent = message;
+            toast.style.cssText = `
+                position: fixed;
+                top: 100px;
+                right: 30px;
+                background: #4a1e6b;
+                color: white;
+                padding: 12px 24px;
+                border-radius: 8px;
+                z-index: 9999;
+                animation: slideIn 0.3s, fadeOut 0.3s 2.7s;
+            `;
+            document.body.appendChild(toast);
+            
+            setTimeout(() => {
+                if (toast.parentNode) {
+                    toast.parentNode.removeChild(toast);
+                }
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
